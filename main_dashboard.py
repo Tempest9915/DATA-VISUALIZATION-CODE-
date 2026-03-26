@@ -1,4 +1,5 @@
 # dashboard_interactive_clean.py
+# To run: python -m streamlit run main_dashboard.py
 
 import pandas as pd
 import numpy as np
@@ -7,7 +8,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 # ------------------------
-# Helper function to clean figures (remove grids)
+# Helper function to clean figures 
 # ------------------------
 def clean_fig(fig, y2=False):
     layout_updates = dict(
@@ -187,16 +188,16 @@ fig_heatmap = clean_fig(px.imshow(
 # Display charts in 2 columns
 # ------------------------
 col1, col2 = st.columns(2)
-col1.plotly_chart(fig_line, use_container_width=True)
-col2.plotly_chart(fig_bar, use_container_width=True)
+col1.plotly_chart(fig_line, width='stretch')
+col2.plotly_chart(fig_bar, width='stretch')
 
 col1, col2 = st.columns(2)
-col1.plotly_chart(fig_scatter, use_container_width=True)
-col2.plotly_chart(fig_box, use_container_width=True)
+col1.plotly_chart(fig_scatter, width='stretch')
+col2.plotly_chart(fig_box, width='stretch')
 
 col1, col2 = st.columns(2)
-col1.plotly_chart(fig_hist, use_container_width=True)
-col2.plotly_chart(fig_heatmap, use_container_width=True)
+col1.plotly_chart(fig_hist, width='stretch')
+col2.plotly_chart(fig_heatmap, width='stretch')
 
 # =========================
 # 5. ADVANCED VISUALIZATIONS (FULL WIDTH)
@@ -210,7 +211,7 @@ fig_bubble = clean_fig(px.scatter(
     hover_name='Region', size_max=40, color_continuous_scale='RdBu',
     title='Climate & Agriculture: Precipitation vs Temperature'
 ))
-st.plotly_chart(fig_bubble, use_container_width=True)
+st.plotly_chart(fig_bubble, width='stretch')
 
 # 5.2 Stress vs Yield with Irrigation
 region_df = year_df.groupby('Region').agg({
@@ -241,7 +242,7 @@ fig_stress.update_layout(
     yaxis2=dict(overlaying='y', side='right')
 )
 fig_stress = clean_fig(fig_stress, y2=True)
-st.plotly_chart(fig_stress, use_container_width=True)
+st.plotly_chart(fig_stress, width='stretch')
 
 # 5.3 Global Agriculture Map
 map_df = year_df.groupby('Country').agg({
@@ -269,4 +270,4 @@ fig_map.update_layout(
     title='Global Agricultural Vulnerability and Performance',
     geo=dict(showframe=False, showcoastlines=True, projection_type='natural earth', landcolor='lightgray')
 )
-st.plotly_chart(fig_map, use_container_width=True)
+st.plotly_chart(fig_map, width='stretch')
